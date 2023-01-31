@@ -31,7 +31,7 @@ export class App extends Component {
         if (res.ok) { return res.json() }
         return Promise.reject(new Error('Такого изображения нет'))
         })
-        .then(data => this.setState({  images: data.hits, isLoading: false })
+        .then(data => this.setState({ images: data.hits, isLoading: false, page: 1 })
         .catch(error => this.setState({error}))
         .finally(() => this.setState({ isLoading: false })));
         }, 1000);
@@ -90,14 +90,7 @@ export class App extends Component {
 // }, 1000);
         
 //     }
-    //   fetch(`https://pixabay.com/api/?q=${this.state.inputValue}&page=${this.state.page}&key=31924399-5ed70afbd2fbb0ac4f5aecf83&image_type=photo&orientation=horizontal&per_page=12`)
-    //     .then(res => {
-    //         if (res.ok) { return res.json() }
-    //         return Promise.reject(new Error('Такого изображения нет'))
-    //     })
-    //     .then(data => this.setState({  largeImage: data.hits[0].largeImageURL}))
-  
-    // .catch(error => this.setState({error}))
+
 
 
 
