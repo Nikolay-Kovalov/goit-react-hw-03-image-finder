@@ -1,6 +1,15 @@
-import { LoadMoreButton } from "./Button.styled"
-export const LoadButton = ({ load }) => {
+import { LoadButton } from "./Button.styled"
+import PropTypes from 'prop-types'
+
+export const LoadMoreButton = ({text, onClickButton}) => {
     return (
-        <LoadMoreButton onClick={load}>Загрузить еще</LoadMoreButton>
+        <LoadButton type="button" onClick={onClickButton}>
+            {text}
+        </LoadButton>
     )
 }
+LoadMoreButton.propTypes = {
+    text: PropTypes.string,
+    onClickButton: PropTypes.func
+}
+

@@ -1,9 +1,18 @@
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem"
-import { GallaryList } from "./ImageGallery.styled"
+import { Gallery } from "./ImageGallery.styled"
+import PropTypes from 'prop-types'
 
-export const ImageGallery = ({ images, openModal}) => {
+export const ImageGallery = ({ Images }) => {
     return (
-<GallaryList>
-{images.map(image => <ImageGalleryItem openModal={openModal} key={image.id} image={image.webformatURL}></ImageGalleryItem>)}
-</GallaryList>)}
+          <Gallery>
+            {Images.map(image => (
+                <ImageGalleryItem key={image.id} image={image.webformatURL
+                } bigImage={image.largeImageURL} /> 
+            ))}
+</Gallery> 
+   )
+}
 
+ImageGallery.propTypes = {
+  Images: PropTypes.arrayOf(PropTypes.object),
+}

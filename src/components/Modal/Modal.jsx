@@ -1,46 +1,54 @@
-import { Overlay, Modal} from "./Modal.styled"
+import { createPortal } from "react-dom";
+import { Component } from "react";
+import { ModalWindow, Overlay } from "./Modal.styled";
+import PropTypes from 'prop-types'
 
-import { Component } from "react"
-export class ModalWindow extends Component {
-
-    handleKeyDown = evt => {
+const modalRoot = document.querySelector('#modal-root')
+export class Modal extends Component {
    
-            if (evt.code === 'Escape')
-                this.props.onClose();
-      
+
+     componentDidMount() {
+       window.addEventListener('keydown', this.handleKeyDown)
+     }
+  
+      componentWillUnmount() {
+        window.removeEventListener('keydown', this.handleKeyDown)
+      }
+  
+    handleKeyDown = (evt) => {
+    if (evt.code === "Escape")
+            this.props.onClose()
+    }
+
+onBackdropClose = (evt) => {
+    if (evt.currentTarget === evt.target) {
+       this.props.onClose()
+    }
 }
 
-    componentDidMount() {
-
-        window.addEventListener("keydown", this.handleKeyDown)  
-           
-    }
-
-    componentWillUnmount() {
-        
-        window.removeEventListener("keydown", this.handleKeyDown)
-    }
-
-    handleBackdropClick = evt => {
-        console.log(evt.currentTarget)
-        console.log(evt.target)
-        if (evt.currentTarget === evt.target) {
-            this.props.onClose();
-
-        }
-    }
-
-    
-
-    render() {
-        const { largeImage } = this.props
+  render() {
+    const{img} = this.props
 
         return (
-            <Overlay onClick={this.handleBackdropClick}>
-                <Modal>
-                    <img src={largeImage} alt="" />
-                </Modal>
-            </Overlay>
+            createPortal(
+                <Overlay onClick={this.onBackdropClose}>
+<ModalWindow >
+    <img src={img} alt="" />
+</ModalWindow>
+</Overlay>
+            , modalRoot)   
         )
     }
-    }
+}
+
+
+Modal.propTypes = {
+  img: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired
+}
+
+
+
+
+
+
